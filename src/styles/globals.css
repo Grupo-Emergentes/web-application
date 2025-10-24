@@ -1,0 +1,207 @@
+@import "tailwindcss";
+
+:root {
+  /* Rojo Institucional Peruano */
+  --peru-red-50: #FEF2F2;
+  --peru-red-100: #FEE2E2;
+  --peru-red-500: #D91023;
+  --peru-red-600: #C4102A;
+  --peru-red-700: #A30F23;
+
+  /* Azul Institucional */
+  --peru-blue-50: #EFF6FF;
+  --peru-blue-100: #DBEAFE;
+  --peru-blue-500: #1E40AF;
+  --peru-blue-600: #1E3A8A;
+  --peru-blue-700: #1E3A8A;
+
+  /* Blanco Institucional */
+  --peru-white: #FFFFFF;
+  --peru-off-white: #F8FAFC;
+
+  /* Grises para textos y bordes */
+  --peru-gray-50: #F9FAFB;
+  --peru-gray-100: #F3F4F6;
+  --peru-gray-200: #E5E7EB;
+  --peru-gray-300: #D1D5DB;
+  --peru-gray-600: #4B5563;
+  --peru-gray-700: #374151;
+  --peru-gray-900: #111827;
+
+  /* Colores de Estado */
+  --peru-success: #10B981;
+  --peru-success-rgb: 16, 185, 129;
+  --peru-warning: #F59E0B;
+  --peru-warning-rgb: 245, 158, 11;
+  --peru-error: #EF4444;
+  --peru-error-rgb: 239, 68, 68;
+  --peru-info: #3B82F6;
+  --peru-info-rgb: 59, 130, 246;
+
+  /* Gradientes */
+  --gradient-primary: linear-gradient(135deg, #D91023 0%, #A30F23 100%);
+  --gradient-secondary: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%);
+  --gradient-hero: linear-gradient(to bottom, rgba(217, 16, 35, 0.05), rgba(30, 64, 175, 0.05));
+}
+
+/* Tipografía */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  /* Definición de tamaños de texto */
+  h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 700;
+  }
+  
+  h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+  }
+  
+  h4 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+  }
+  
+  h5 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+  }
+  
+  h6 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  .font-medium {
+    font-weight: 500;
+  }
+  
+  .font-semibold {
+    font-weight: 600;
+  }
+  
+  .font-bold {
+    font-weight: 700;
+  }
+}
+
+/* Animaciones y transiciones */
+@layer components {
+  .transition-hover {
+    transition-property: all;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-effect {
+    transition-property: all;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .hover-effect:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    transform: scale(1.02);
+  }
+  
+  .badge {
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .badge-success {
+    background-color: rgba(var(--peru-success-rgb), 0.1);
+    color: var(--peru-success);
+  }
+  
+  .badge-warning {
+    background-color: rgba(var(--peru-warning-rgb), 0.1);
+    color: var(--peru-warning);
+  }
+  
+  .badge-error {
+    background-color: rgba(var(--peru-error-rgb), 0.1);
+    color: var(--peru-error);
+  }
+  
+  .badge-info {
+    background-color: rgba(var(--peru-info-rgb), 0.1);
+    color: var(--peru-info);
+  }
+}
+
+/* Estilos base para elementos HTML */
+@layer base {
+  body {
+    background-color: var(--peru-gray-50);
+    color: var(--peru-gray-900);
+  }
+  
+  a {
+    color: var(--peru-blue-500);
+    transition-property: color;
+    transition-duration: 200ms;
+  }
+  
+  a:hover {
+    color: var(--peru-blue-700);
+  }
+  
+  button {
+    transition-property: all;
+    transition-duration: 200ms;
+  }
+}
+
+/* Animaciones personalizadas */
+@layer utilities {
+  .animate-in {
+    animation-name: animate-in;
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-fill-mode: forwards;
+  }
+  
+  .animate-out {
+    animation-name: animate-out;
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-fill-mode: forwards;
+  }
+}
