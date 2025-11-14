@@ -63,6 +63,8 @@ export default function App() {
       <main className="pt-16">
         {renderView()}
       </main>
+      {/* Chatbot flotante */}
+      <Chatbot userName="Carlos Mendoza" />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { Card } from './ui/card';
-import { Button } from './ui/button';
+
 import { Wallet, FileText, MessageCircle, Calendar, Plus } from 'lucide-react';
 
 interface QuickActionsProps {

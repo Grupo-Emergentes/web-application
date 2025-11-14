@@ -1,17 +1,13 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
-import { Card } from '../ui/card';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import { Dialog, DialogContent } from './ui/dialog';
+import { Button } from './ui/button';
+import { Badge } from './ui/badge';
+import { Card } from './ui/card';
+import { Label } from './ui/label';
 import { 
-  X, 
   Download, 
   Share2, 
   QrCode, 
-  MessageSquare, 
   Link2, 
   Shield,
   CheckCircle,
@@ -28,7 +24,7 @@ interface DNIModalProps {
 
 export function DNIModal({ open, onClose }: DNIModalProps) {
   const [showQR, setShowQR] = useState(false);
-  const [shareMethod, setShareMethod] = useState<'sms' | 'link' | null>(null);
+  // const [shareMethod] = useState<'sms' | 'link' | null>(null);
 
   // Datos mock del DNI
   const dniData = {

@@ -199,7 +199,7 @@ export function DynamicForm({ onClose, schema = defaultSchema, tramiteName }: Dy
                     onValueChange={(value) => handleInputChange('sexo', value)}
                   >
                     <SelectTrigger className="border-2 border-slate-300 focus:border-blue-500">
-                      <SelectValue placeholder="Selecciona una opción" />
+                      <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="M">Masculino</SelectItem>

@@ -5,7 +5,7 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
-import { ArrowLeft, Search, MessageCircle, Phone, Mail, HelpCircle, BookOpen, Video } from 'lucide-react';
+import { ArrowLeft, Search, MessageCircle, Phone, Mail, Video } from 'lucide-react';
 
 interface AyudaProps {
   onViewChange: (view: any) => void;
