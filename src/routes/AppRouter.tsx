@@ -6,7 +6,8 @@ export const AppRouter = () => {
 
     const AppRoles = {
         ADMIN: "Admin",
-        USER: "User"
+        SUPERADMIN: "User",
+        CIUDADANO: "Ciudadano",
     } as const;
 
     return (
@@ -29,7 +30,7 @@ export const AppRouter = () => {
             <Route
                 path="/dadwa"
                 element={
-                    <RoleRoute allowedRoles={[AppRoles.ADMIN]}>
+                    <RoleRoute allowedRoles={[AppRoles.ADMIN, AppRoles.SUPERADMIN]}>
                         <div>Ruta Protegida con vista para el admin</div>
                     </RoleRoute>
                 }
@@ -37,7 +38,7 @@ export const AppRouter = () => {
             <Route
                 path="/rol2"
                 element={
-                    <RoleRoute allowedRoles={[AppRoles.USER]}>
+                    <RoleRoute allowedRoles={[AppRoles.CIUDADANO]}>
                         <div>Ruta Protegida con vista para el usuario</div>
                     </RoleRoute>
                 }
