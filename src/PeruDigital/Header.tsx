@@ -14,9 +14,7 @@ export function Header({ currentView, onViewChange }: HeaderProps) {
   const navigationItems = [
     { id: 'services', label: 'Servicios', view: 'services' },
     { id: 'wallet', label: 'Mi Billetera', view: 'wallet' },
-    { id: 'solicitudes', label: 'Solicitudes', view: 'solicitudes' },
     { id: 'ayuda', label: 'Ayuda', view: 'ayuda' },
-    { id: 'admin', label: 'Panel Admin', view: 'admin' },
   ];
 
   return (
@@ -29,9 +27,6 @@ export function Header({ currentView, onViewChange }: HeaderProps) {
               onClick={() => onViewChange('dashboard')}
               className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
             >
-              <div className="w-10 h-10 bg-linear-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white text-xl">P</span>
-              </div>
               <div className="flex flex-col">
                 <span className="text-xl bg-linear-to-r from-red-600 to-red-700 bg-clip-text text-transparent">Perú Digital</span>
                 <span className="text-xs text-slate-500">Estado Peruano</span>

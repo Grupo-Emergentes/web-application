@@ -1,9 +1,10 @@
 import { WelcomeSection } from './WelcomeSection';
 import { QuickActions } from './QuickActions';
-import { WalletSection } from './WalletSection';
-import { ServicesGrid } from './ServicesGrid';
+import { WalletSection } from './Wallet/WalletSection';
+import { ServicesGrid } from './Procedure Management/ServicesGrid';
 import { SecuritySection } from './SecuritySection';
 import { Footer } from './Footer';
+import { WalletSmallSection } from './Wallet/WalletSmallSection';
 
 interface DashboardProps {
   onViewChange: (view: any) => void;
@@ -21,7 +22,7 @@ export function Dashboard({ onViewChange, onStartTramite }: DashboardProps) {
         <QuickActions onViewChange={onViewChange} />
         
         {/* Mi billetera digital */}
-        <WalletSection onViewChange={onViewChange} />
+        <WalletSmallSection onViewChange={onViewChange} />
         
         {/* Servicios disponibles */}
         <ServicesGrid onViewChange={onViewChange} onStartTramite={onStartTramite} />

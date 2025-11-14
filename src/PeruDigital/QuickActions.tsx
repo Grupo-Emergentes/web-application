@@ -13,7 +13,7 @@ export function QuickActions({ onViewChange }: QuickActionsProps) {
       title: 'Mi Billetera',
       description: 'Documentos digitales',
       icon: Wallet,
-      gradient: 'from-blue-500 to-blue-600',
+      gradient: 'from-red-600 to-red-700',
       onClick: () => onViewChange('wallet')
     },
     {
@@ -21,7 +21,7 @@ export function QuickActions({ onViewChange }: QuickActionsProps) {
       title: 'Ver Reporte',
       description: 'Actividad reciente',
       icon: FileText,
-      gradient: 'from-purple-500 to-purple-600',
+      gradient: 'from-red-600 to-red-700',
       onClick: () => onViewChange('report')
     },
     {
@@ -29,7 +29,7 @@ export function QuickActions({ onViewChange }: QuickActionsProps) {
       title: 'Contactar Soporte',
       description: 'Ayuda personalizada',
       icon: MessageCircle,
-      gradient: 'from-emerald-500 to-emerald-600',
+      gradient: 'from-red-600 to-red-700',
       onClick: () => onViewChange('ayuda')
     },
     {
@@ -37,7 +37,7 @@ export function QuickActions({ onViewChange }: QuickActionsProps) {
       title: 'Citas',
       description: 'Programar trámites',
       icon: Calendar,
-      gradient: 'from-amber-500 to-amber-600',
+      gradient: 'from-red-600 to-red-700',
       onClick: () => onViewChange('solicitudes')
     },
     {
@@ -45,7 +45,7 @@ export function QuickActions({ onViewChange }: QuickActionsProps) {
       title: 'Nueva Solicitud',
       description: 'Iniciar trámite',
       icon: Plus,
-      gradient: 'from-red-500 to-red-600',
+      gradient: 'from-red-600 to-red-700',
       onClick: () => onViewChange('solicitudes')
     }
   ];
