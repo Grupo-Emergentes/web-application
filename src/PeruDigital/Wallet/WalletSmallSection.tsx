@@ -27,7 +27,7 @@ export function WalletSmallSection({ onViewChange, fullView = false }: WalletSma
       number: '7234 5678',
       status: 'Activo',
       validUntil: 'Válido hasta 2029-03-15',
-      bg: 'bg-red-600',
+      bg: 'bg-linear-to-br from-red-600 to-red-700',
       icon: Shield
     },
     {
@@ -37,7 +37,7 @@ export function WalletSmallSection({ onViewChange, fullView = false }: WalletSma
       number: 'C723 4567 8',
       status: 'Activo',
       validUntil: 'Válido hasta 2026-08-20',
-      bg: 'bg-emerald-600',
+      bg: 'bg-linear-to-br from-gray-800 to-gray-900',
       icon: FileText
     },
     {
@@ -47,7 +47,7 @@ export function WalletSmallSection({ onViewChange, fullView = false }: WalletSma
       number: 'VAC- 2024 -123 456',
       status: 'Activo',
       validUntil: '',
-      bg: 'bg-blue-600',
+      bg: 'bg-linear-to-br from-gray-700 to-gray-800',
       icon: Shield
     },
     {
@@ -57,36 +57,36 @@ export function WalletSmallSection({ onViewChange, fullView = false }: WalletSma
       number: '2872 3456 781',
       status: 'Activo',
       validUntil: '',
-      bg: 'bg-purple-600',
+      bg: 'bg-linear-to-br from-gray-600 to-gray-700',
       icon: FileText
     }
   ];
 
   const metrics = [
-    { label: 'Documentos Activos', value: '4', icon: Shield, bg: 'bg-blue-50', iconColor: 'text-blue-600', border: 'border-blue-200' },
-    { label: 'Próximos a Vencer', value: '1', icon: FileText, bg: 'bg-amber-50', iconColor: 'text-amber-600', border: 'border-amber-200' },
-    { label: 'Certificados', value: '2', icon: CheckCircle, bg: 'bg-emerald-50', iconColor: 'text-emerald-600', border: 'border-emerald-200' }
+    { label: 'Documentos Activos', value: '4', icon: Shield, bg: 'bg-linear-to-br from-black to-gray-900', iconColor: 'text-white', border: 'border-black' },
+    { label: 'Próximos a Vencer', value: '1', icon: FileText, bg: 'bg-linear-to-br from-red-600 to-red-700', iconColor: 'text-white', border: 'border-red-600' },
+    { label: 'Certificados', value: '2', icon: CheckCircle, bg: 'bg-linear-to-br from-gray-800 to-black', iconColor: 'text-white', border: 'border-gray-800' }
   ];
 
   if (fullView) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-red-50 pt-8">
+      <div className="min-h-screen bg-gray-50 pt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-4">
               <Button
                 variant="outline"
                 onClick={() => onViewChange('dashboard')}
-                className="flex items-center space-x-2 border-2 border-red-600 text-red-700 hover:bg-red-50"
+                className="flex items-center space-x-2 border-2 border-black text-black hover:bg-gray-100"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Volver</span>
               </Button>
               <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent">
+                <h1 className="text-4xl font-bold text-black">
                   Mi Billetera Digital
                 </h1>
-                <p className="text-slate-600">Documentos oficiales del Estado Peruano con tecnología blockchain</p>
+                <p className="text-gray-600">Documentos oficiales del Estado Peruano con tecnología blockchain</p>
               </div>
             </div>
           </div>
@@ -101,11 +101,11 @@ export function WalletSmallSection({ onViewChange, fullView = false }: WalletSma
     <section className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent flex items-center space-x-3">
+          <h2 className="text-3xl font-bold text-black flex items-center space-x-3">
             <Wallet className="w-8 h-8 text-red-600" />
             <span>Mi Billetera Digital</span>
           </h2>
-          <p className="text-slate-600 mt-1">Documentos oficiales del Estado Peruano con tecnología blockchain</p>
+          <p className="text-gray-600 mt-1">Documentos oficiales del Estado Peruano con tecnología blockchain</p>
         </div>
         <Button
           variant="outline"
@@ -132,22 +132,22 @@ function WalletContent({ documents, metrics, onViewChange, preview = false, show
   return (
     <div className="space-y-6">
       {/* Header con información */}
-      <Card className="bg-red-50 border-2 border-dashed border-red-200 p-6">
+      <Card className="bg-white border-2 border-red-600 p-6">
         <div className="flex items-start justify-between">
           <div className="flex items-start space-x-4">
             <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
               <Wallet className="w-6 h-6 text-red-600" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-1">Mi Billetera Digital</h3>
-              <p className="text-sm text-slate-600 mb-3">Todos tus documentos del Estado Peruano en un solo lugar</p>
+              <h3 className="text-lg font-semibold text-black mb-1">Mi Billetera Digital</h3>
+              <p className="text-sm text-gray-600 mb-3">Todos tus documentos del Estado Peruano en un solo lugar</p>
               <div className="flex items-center space-x-2 text-sm">
                 <span className="font-semibold text-red-600">4 documentos</span>
               </div>
             </div>
           </div>
           {!preview && (
-            <Button className="bg-slate-900 text-white hover:bg-slate-800">
+            <Button className="bg-black text-white hover:bg-gray-800">
               + Agregar Documento
             </Button>
           )}
@@ -159,10 +159,10 @@ function WalletContent({ documents, metrics, onViewChange, preview = false, show
         {metrics.map((metric: any, index: number) => {
           const Icon = metric.icon;
           return (
-            <Card key={index} className={`${metric.bg} border ${metric.border} p-6 text-center`}>
+            <Card key={index} className={`${metric.bg} border-2 ${metric.border} p-6 text-center`}>
               <Icon className={`w-8 h-8 mx-auto mb-2 ${metric.iconColor}`} />
-              <div className="text-3xl font-bold text-slate-900">{metric.value}</div>
-              <div className="text-sm text-slate-600 mt-1">{metric.label}</div>
+              <div className="text-3xl font-bold text-white">{metric.value}</div>
+              <div className="text-sm text-white mt-1">{metric.label}</div>
             </Card>
           );
         })}
@@ -201,8 +201,8 @@ function WalletContent({ documents, metrics, onViewChange, preview = false, show
                 <p className="text-sm opacity-90">{doc.entity}</p>
                 
                 <div className="pt-2 space-y-1 text-sm">
-                  <div>{doc.number}</div>
-                  {doc.validUntil && <div className="text-xs opacity-80">{doc.validUntil}</div>}
+                  <div className="font-semibold">{doc.number}</div>
+                  {doc.validUntil && <div className="text-xs opacity-90">{doc.validUntil}</div>}
                 </div>
               </div>
             </Card>
@@ -215,7 +215,7 @@ function WalletContent({ documents, metrics, onViewChange, preview = false, show
           <Button
             variant="outline"
             onClick={() => onViewChange('wallet')}
-            className="border-2 border-red-600 text-red-700 hover:bg-red-50 shadow-lg"
+            className="border-2 border-black text-black hover:bg-gray-100 shadow-lg"
           >
             Ver todos los documentos
           </Button>
