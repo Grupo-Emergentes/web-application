@@ -71,18 +71,6 @@ export function WalletSection({ onViewChange, fullView = false }: WalletSectionP
 
   const documents = [
     {
-      id: 'dni',
-      name: 'DNI Digital (RENIEC)',
-      number: dniData?.dniNumber || dniData?.cardNumber || '888',
-      status: 'Activo',
-      security: 'alta',
-      verifications: dniData?.verificaciones || 142,
-      lastVerification: dniData?.ultimaVerificacion || '2024-01-15 14:30',
-      hash: dniData?.hashBlockchain || dniData?.hash || '0x1a2b3c4d5e6f7g8h9i0j...',
-      entity: 'RENIEC',
-      gradient: 'from-red-600 to-red-700'
-    },
-    {
       id: 'license',
       name: 'Licencia de Conducir (MTC)',
       number: 'C72345678',

@@ -135,11 +135,6 @@ export function DigitalDNI({ onViewChange }: DigitalDNIProps) {
                     <h2 className="text-lg font-bold">REPÚBLICA DEL PERÚ</h2>
                     <p className="text-sm opacity-90">DOCUMENTO NACIONAL DE IDENTIDAD</p>
                   </div>
-                  <div className="text-right">
-                    <div className="w-16 h-16 bg-red-600 border-2 border-red-700 rounded-lg flex items-center justify-center">
-                      <span className="text-2xl font-bold">P</span>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -304,24 +299,7 @@ export function DigitalDNI({ onViewChange }: DigitalDNIProps) {
               </div>
             </Card>
 
-            {/* Estado del documento */}
-            <Card className="p-6 border-2 border-black shadow-lg">
-              <h3 className="font-bold text-black text-lg mb-4">Estado del Documento</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 font-medium">Validez Legal</span>
-                  <Badge className="bg-white text-black border-2 border-black font-medium">Válido</Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 font-medium">Estado RENIEC</span>
-                  <Badge className="bg-red-600 text-white border-2 border-red-700 font-medium">Activo</Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 font-medium">Blockchain</span>
-                  <Badge className="bg-black text-white border-2 border-black font-medium">Verificado</Badge>
-                </div>
-              </div>
-            </Card>
+            
           </div>
         </div>
       </div>
