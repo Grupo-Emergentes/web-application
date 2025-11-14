@@ -8,6 +8,8 @@ import { Ayuda } from './PeruDigital/Ayuda';
 import { AdminPanel } from './PeruDigital/AdminPanel';
 import { DigitalDNI } from './PeruDigital/Wallet/DigitalDNI';
 import { DynamicForm } from './PeruDigital/Procedure Management/DynamicForm';
+import { getProcedureSchema } from './PeruDigital/Procedure Management/procedureSchemas';
+import { Chatbot } from './PeruDigital/Chatbot';
 
 type ViewType = 
   | "dashboard" 
@@ -27,6 +29,7 @@ export default function App() {
   const [currentTramite, setCurrentTramite] = useState<{ id: string; name: string } | null>(null);
 
   const handleStartTramite = (tramiteId: string, tramiteName: string) => {
+    console.log('🚀 Iniciando trámite:', { tramiteId, tramiteName });
     setCurrentTramite({ id: tramiteId, name: tramiteName });
     setCurrentView('tramite-form');
   };
@@ -48,9 +51,34 @@ export default function App() {
       case "digital-dni":
         return <DigitalDNI onViewChange={setCurrentView} />;
       case "tramite-form":
+        if (!currentTramite) {
+          console.error('❌ No hay trámite seleccionado');
+          return <Dashboard onViewChange={setCurrentView} onStartTramite={handleStartTramite} />;
+        }
+        
+        const schema = getProcedureSchema(currentTramite.id);
+        
+        if (!schema) {
+          console.error('❌ Schema no encontrado para:', currentTramite.id);
+          alert(`No se encontró el schema para el trámite: ${currentTramite.name}`);
+          return <ServicesGrid onViewChange={setCurrentView} fullView={true} onStartTramite={handleStartTramite} />;
+        }
+        
+        console.log('✅ Schema cargado:', schema);
+        
         return <DynamicForm 
-          onClose={() => setCurrentView('services')} 
-          tramiteName={currentTramite?.name}
+          schema={schema}
+          onClose={() => {
+            setCurrentTramite(null);
+            setCurrentView('services');
+          }}
+          onSubmit={(data) => {
+            console.log('📤 Datos del trámite enviados:', data);
+            // Aquí iría la llamada al backend
+            alert(`Trámite "${schema.name}" enviado exitosamente`);
+            setCurrentTramite(null);
+            setCurrentView('dashboard');
+          }}
         />;
       default:
         return <Dashboard onViewChange={setCurrentView} onStartTramite={handleStartTramite} />;

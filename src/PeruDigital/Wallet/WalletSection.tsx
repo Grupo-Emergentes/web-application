@@ -10,7 +10,6 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { DNIModal } from './DNIModal';
 import { walletService } from './services/walletServices';
 import { 
   Wallet, 
@@ -528,9 +527,7 @@ function WalletContent({
         </TabsContent>
       </Tabs>
       
-      {!preview && (
-        <DNIModal open={showDNIModal} onClose={() => setShowDNIModal(false)} dniData={dniData} />
-      )}
+      
     </div>
   );
 }

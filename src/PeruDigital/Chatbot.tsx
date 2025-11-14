@@ -125,7 +125,7 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 rounded-full bg-linear-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-2xl hover:shadow-3xl transition-all hover:scale-110 animate-pulse"
+          className="w-14 h-14 rounded-full bg-linear-to-br from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-2xl hover:shadow-3xl transition-all hover:scale-110 animate-pulse"
         >
           <MessageCircle className="w-6 h-6" />
         </Button>
@@ -133,16 +133,16 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
 
       {/* Ventana del chatbot */}
       {isOpen && (
-        <Card className="w-80 h-96 bg-white shadow-2xl border-2 border-slate-200 flex flex-col overflow-hidden">
+        <Card className="w-80 h-96 bg-white shadow-2xl border-2 border-black flex flex-col overflow-hidden">
           {/* Header del chat */}
-          <div className="bg-linear-to-r from-blue-600 to-blue-700 text-white p-4 flex items-center justify-between">
+          <div className="bg-white text-black p-4 flex items-center justify-between border-b-2 border-black">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                <Bot className="w-5 h-5" />
+              <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+                <Bot className="w-5 h-5 text-white" />
               </div>
               <div>
                 <h3 className="font-semibold text-sm">Asistente Virtual</h3>
-                <p className="text-xs opacity-90">Perú Digital</p>
+                <p className="text-xs text-gray-600">Perú Digital</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -150,7 +150,7 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsOpen(false)}
-                className="text-white hover:bg-white hover:bg-opacity-20 w-8 h-8 p-0"
+                className="text-black hover:bg-gray-100 w-8 h-8 p-0"
               >
                 <Minimize2 className="w-4 h-4" />
               </Button>
@@ -161,7 +161,7 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
                   setIsOpen(false);
                   setMessages([]);
                 }}
-                className="text-white hover:bg-white hover:bg-opacity-20 w-8 h-8 p-0"
+                className="text-black hover:bg-gray-100 w-8 h-8 p-0"
               >
                 <X className="w-4 h-4" />
               </Button>
@@ -169,7 +169,7 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
           </div>
 
           {/* Área de mensajes */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -181,8 +181,8 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
                   {/* Avatar */}
                   <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${
                     message.sender === 'user' 
-                      ? 'bg-linear-to-br from-red-500 to-red-600' 
-                      : 'bg-linear-to-br from-blue-500 to-blue-600'
+                      ? 'bg-linear-to-br from-red-600 to-red-700' 
+                      : 'bg-linear-to-br from-black to-gray-900'
                   }`}>
                     {message.sender === 'user' ? (
                       <User className="w-3 h-3 text-white" />
@@ -195,12 +195,12 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
                   <div>
                     <div className={`p-3 rounded-lg text-sm ${
                       message.sender === 'user'
-                        ? 'bg-red-600 text-white'
-                        : 'bg-white border border-slate-200 text-slate-800 shadow-sm'
+                        ? 'bg-red-600 text-white font-medium'
+                        : 'bg-white border-2 border-black text-black shadow-sm'
                     }`}>
                       {message.text}
                     </div>
-                    <div className="text-xs text-slate-500 mt-1 px-1">
+                    <div className="text-xs text-gray-500 mt-1 px-1">
                       {formatTime(message.timestamp)}
                     </div>
                   </div>
@@ -212,14 +212,14 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
             {isTyping && (
               <div className="flex justify-start">
                 <div className="flex items-center space-x-2">
-                  <div className="w-6 h-6 bg-linear-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                  <div className="w-6 h-6 bg-linear-to-br from-black to-gray-900 rounded-full flex items-center justify-center">
                     <Bot className="w-3 h-3 text-white" />
                   </div>
-                  <div className="bg-white border border-slate-200 p-3 rounded-lg">
+                  <div className="bg-white border-2 border-black p-3 rounded-lg">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-gray-800 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-800 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-800 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -228,21 +228,21 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
           </div>
 
           {/* Input del chat */}
-          <div className="p-3 border-t border-slate-200 bg-white">
+          <div className="p-3 border-t-2 border-black bg-white">
             <div className="flex items-center space-x-2">
               <Input
                 placeholder="Escribe tu mensaje..."
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="flex-1 text-sm border-2 border-slate-300 focus:border-blue-500"
+                className="flex-1 text-sm border-2 border-black focus:border-red-600 font-medium"
                 disabled={isTyping}
               />
               <Button
                 onClick={sendMessage}
                 disabled={!inputMessage.trim() || isTyping}
                 size="sm"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-3"
+                className="bg-red-600 hover:bg-red-700 text-white px-3"
               >
                 <Send className="w-4 h-4" />
               </Button>
