@@ -120,14 +120,7 @@ export function WalletSection({ onViewChange, fullView = false }: WalletSectionP
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-4">
-              <Button
-                variant="outline"
-                onClick={() => onViewChange('dashboard')}
-                className="flex items-center space-x-2 border-2 border-gray-900 text-gray-900 hover:bg-gray-50"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Volver</span>
-              </Button>
+              
               <div>
                 <h1 className="text-4xl font-bold text-black">
                   Mi Billetera Digital
