@@ -2,38 +2,49 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from '@/auth/ProtectedRoute';
 import { RoleRoute } from '@/auth/RoleRoute';
 
-import { ROLES } from '@/utils/roles';
+// componente aparte (moverlo a otro archivo /dashboard)
+import { useAuth } from 'react-oidc-context';
+import { SignOutButton } from '@/components/SignOutButton';
 
 
-// Páginas públicas ===================================
-import { Login } from "@/pages/Login";
-// import Login from "../pages/Login";
-// import Info from "../pages/Info";
+import { ROLES } from '@/utils/constants/roles';
+import { ROUTE_PATHS } from '@/utils/constants/routePaths';
 
-// Páginas de administración ===============================
-// import AdminPage from "../pages/AdminPage";
-// import EditorPage from "../pages/EditorPage";
-
-// Páginas de error / no autorizado ===========================
-// import NotAuthorized from "../pages/NotAuthorized";
-// import NotFound from "../pages/NotFound";
+// Páginas públicas
+import { IndexPage } from '@/pages/Index';
+import { LoginPage } from '@/pages/Login';
+import { NotFoundPage } from '@/pages/NotFound';
 
 export const AppRouter = () => {
-    return (
+    const auth = useAuth();
+
+    const handleSignOut = () => {
+        auth.removeUser();
+        // auth
+        // .removeUser()
+        // .then(() => {
+        //     void auth.signoutRedirect();
+        // })
+    }
+
+    return (        
 
         <Routes>
             {/* RUTAS PUBLICAS */}
-            <Route path="/" element={<div>Home Public</div>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/rutapublica2" element={<div>Home Public 2</div>} />
 
+            <Route path={ROUTE_PATHS.INDEX} element={<IndexPage />} />
+            <Route path={ROUTE_PATHS.LOGIN} element={<LoginPage />} />
+            <Route path={ROUTE_PATHS.NOT_FOUND} element={<NotFoundPage />} />
 
             {/* RUTAS PROTEGIDAS */}
             <Route
-                path="/dadwa"
+                path={ROUTE_PATHS.DASHBOARD}
                 element={
                     <ProtectedRoute>
-                        <div>Ruta Protegida</div>
+                        <div>
+                            Ruta Protegida
+                            <SignOutButton onClick={handleSignOut} />
+                        </div>
                     </ProtectedRoute>
                 }
             />
@@ -48,13 +59,13 @@ export const AppRouter = () => {
             <Route
                 path="/rol2"
                 element={
-                    <RoleRoute allowedRoles={[ROLES.CIUDADANO]}>
+                    <RoleRoute allowedRoles={[ROLES.CITIZEN]}>
                         <div>Ruta Protegida con vista para el usuario</div>
                     </RoleRoute>
                 }
             />
 
-            <Route path="*" element={<Navigate to="/not-found" replace />} />
+            <Route path="*" element={<Navigate to={ROUTE_PATHS.NOT_FOUND} replace />} />
 
 
         </Routes>
