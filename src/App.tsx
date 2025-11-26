@@ -1,12 +1,15 @@
 // App.js
 
+import { useState } from 'react';
 import { useAuth } from "react-oidc-context";
 import { SignInButton } from "./components/SignInButton";
 import { SignOutButton } from "./components/SignOutButton";
+import { AdminSuperAdminPanel } from "./components/AdminSuperAdminPanel";
 import { Shield } from 'lucide-react';
 
 function App() {
   const auth = useAuth();
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
 
   const signOutRedirect = () => {
     const clientId = "4ih0t549ecd43jp2nmnhakoems";
@@ -70,6 +73,11 @@ function App() {
   }
 
   if (auth.isAuthenticated) {
+    // Si se debe mostrar el panel de admin, renderizarlo
+    if (showAdminPanel) {
+      return <AdminSuperAdminPanel />;
+    }
+
     return (
         <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-red-50 flex items-center">
           {/* Lado izquierdo - Información */}
@@ -85,8 +93,14 @@ function App() {
               <pre className="mb-4 p-4 bg-slate-50 rounded-lg text-xs break-all"> Refresh Token: {auth.user?.refresh_token} </pre>
             </div>
             
-            <div className="mt-4">
+            <div className="mt-4 space-y-4">
               <SignOutButton onClick={signOutRedirect} />
+              <button 
+                onClick={() => setShowAdminPanel(true)}
+                className="w-full bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
+              >
+                🛡️ Panel de Administración
+              </button>
             </div>
           </div>
           
