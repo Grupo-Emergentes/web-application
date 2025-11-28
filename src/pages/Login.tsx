@@ -1,7 +1,7 @@
 import { Shield } from 'lucide-react';
 import { SignInButton } from '@/components/SignInButton';
 import { useAuth } from 'react-oidc-context';
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 
 export const LoginPage = () => {
     const auth = useAuth();
@@ -46,10 +46,6 @@ export const LoginPage = () => {
 
     if (auth.error) {
         return <div>Encountering error... {auth.error.message}</div>;
-    }
-
-    if (auth.isAuthenticated) {
-        return <Navigate to="/dashboard" replace />;
     }
 
     return (

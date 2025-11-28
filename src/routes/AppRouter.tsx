@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { RoleRoute } from '@/auth/RoleRoute';
+import { useAuth } from 'react-oidc-context';
 
 import { ROLES } from '@/utils/constants/roles';
 import { ROUTE_PATHS } from '@/utils/constants/routePaths';
@@ -13,27 +14,28 @@ import { DashboardPage } from '@/pages/Dashboard';
 import { SuperAdminPanelPage } from '@/pages/SuperAdminPanel';
 
 export const AppRouter = () => {
+    const auth = useAuth();
 
-    return (        
+    return (
 
         <Routes>
             {/* RUTAS PUBLICAS */}
-            <Route path={ROUTE_PATHS.INDEX} element={<LoginPage />} />
+            <Route
+                path={ROUTE_PATHS.INDEX}
+                element={
+                    auth.isAuthenticated ?
+                        <RoleRoute allowedRoles={[ROLES.ADMIN, ROLES.SUPERADMIN]}>
+                            <DashboardPage />
+                        </RoleRoute> : <LoginPage />
+                }
+            />
             <Route path={ROUTE_PATHS.NOT_FOUND} element={<NotFoundPage />} />
 
             {/* RUTAS PROTEGIDAS */}
             <Route
-                path={ROUTE_PATHS.DASHBOARD}
-                element={
-                    <RoleRoute allowedRoles={[ROLES.ADMIN, ROLES.SUPERADMIN]}>
-                        <DashboardPage />
-                    </RoleRoute>
-                }
-            />
-            <Route
                 path={ROUTE_PATHS.ADMIN}
                 element={
-                    <RoleRoute allowedRoles={[ROLES.CITIZEN]}>
+                    <RoleRoute allowedRoles={[ROLES.ADMIN]}>
                         <div>Ruta Protegida con vista para el usuario</div>
                     </RoleRoute>
                 }
@@ -41,7 +43,7 @@ export const AppRouter = () => {
             <Route
                 path={ROUTE_PATHS.SUPER_ADMIN_PANEL}
                 element={
-                    <RoleRoute allowedRoles={[ROLES.SUPERADMIN]}>
+                    <RoleRoute allowedRoles={[ROLES.ADMIN]}>
                         <SuperAdminPanelPage />
                     </RoleRoute>
                 }

@@ -13,6 +13,13 @@ interface RoleRouteProps {
 export const RoleRoute = ({ children, allowedRoles }: RoleRouteProps) => {
     const auth = useAuth();
 
+    if (auth.isLoading) {
+        return (
+        <div className="min-h-screen flex items-center justify-center">
+            Cargando...
+        </div>
+        );
+    }
     if (!auth.isAuthenticated) return <Navigate to={ROUTE_PATHS.INDEX} replace />;
 
     const groups = auth.user?.profile["cognito:groups"] as string[] || [];

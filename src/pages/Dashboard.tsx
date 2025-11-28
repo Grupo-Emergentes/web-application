@@ -2,6 +2,9 @@
 // solo seria ejemplo de como importar componentes y usarlos en la página
 
 import { Dashboard } from "@/components/Dashboard";
+import { SignOutButton } from "@/components/SignOutButton";
+import { useAuth } from 'react-oidc-context';
+
 
 type ViewType = 'home' | 'settings' | 'wallet';
 
@@ -14,12 +17,20 @@ const handleStartTramite = (id: string, name: string) => {
 };
 
 export const DashboardPage = () => {
-    return(
-        <div>
-            <Dashboard 
-            onViewChange={handleViewChange} 
-            onStartTramite={handleStartTramite}/>
-            Dashboard Page
-        </div>
-    )
+  const auth = useAuth();
+  const handleSignOut = () => {
+    auth
+    .removeUser()
+    .then(() => {
+        void auth.signoutRedirect();
+    })
+  }
+  return (
+    <div>
+      <SignOutButton onClick={handleSignOut} />
+      <Dashboard
+        onViewChange={handleViewChange}
+        onStartTramite={handleStartTramite} />
+    </div>
+  )
 }
