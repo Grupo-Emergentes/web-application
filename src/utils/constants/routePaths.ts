@@ -14,6 +14,7 @@ export const ROUTE_PATHS = {
     SOLICITUDES: '/solicitudes',
     AYUDA: '/ayuda',
     TRAMITE_FORM: '/tramite-form',
+    SUPER_ADMIN_PANEL: '/super-admin-panel',
 
     NOT_FOUND: '/not-found',
 
