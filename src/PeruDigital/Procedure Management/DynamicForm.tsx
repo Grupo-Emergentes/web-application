@@ -115,16 +115,18 @@ export function DynamicForm({ schema, onClose, onSubmit }: DynamicFormProps) {
         });
       console.log("Respuesta del servidor:", response);
 
+      if (onSubmit) {
+        onSubmit(submitData);
+      } else {
+        alert(`Solicitud de ${schema.name} enviada exitosamente`);
+        onClose();
+      }
+
     }catch(error){
       console.error("Error al enviar el formulario:", error);
+      alert("Ocurrió un error al enviar la solicitud.");
     }
     
-    if (onSubmit) {
-      onSubmit(submitData);
-    } else {
-      alert(`Solicitud de ${schema.name} enviada exitosamente`);
-      onClose();
-    }
   };
 
   // Renderizar campo según tipo
