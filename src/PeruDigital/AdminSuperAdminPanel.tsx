@@ -54,7 +54,7 @@ export function AdminSuperAdminPanel() {
 
     try {
       const { userId } = await signUp({
-        username: formData.email,
+        username: formData.name,
         password: formData.password,
         options: {
           userAttributes: {
@@ -118,11 +118,11 @@ export function AdminSuperAdminPanel() {
             <div className="space-y-2">
               <Label className="text-slate-700 font-medium flex items-center">
                 <User className="w-4 h-4 mr-2 text-blue-600" />
-                Nombre Completo *
+                Nombre de usuario *
               </Label>
               <Input
                 type="text"
-                placeholder="Ingrese el nombre completo"
+                placeholder="Ingrese el nombre de usuario"
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 className="border-2 border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
