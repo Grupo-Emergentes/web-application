@@ -3,7 +3,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { Input } from '../ui/input';
 import { Select } from '../ui/select';
-import { ArrowLeft, Search, Baby, CreditCard, Heart, Home, FileText, Calculator, Car, Scale } from 'lucide-react';
+import { Search, Baby, CreditCard, Heart, Home, FileText, Calculator, Car, Scale } from 'lucide-react';
 import { useState } from 'react';
 
 interface ServicesGridProps {

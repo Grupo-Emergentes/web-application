@@ -128,7 +128,7 @@ export function WalletSmallSection({ onViewChange, fullView = false }: WalletSma
   );
 }
 
-function WalletContent({ documents, metrics, onViewChange, preview = false, showDNIModal, setShowDNIModal }: any) {
+function WalletContent({ documents, metrics, onViewChange, preview = false, setShowDNIModal }: any) {
   return (
     <div className="space-y-6">
       {/* Header con información */}
