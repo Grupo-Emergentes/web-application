@@ -82,6 +82,7 @@ export function AdminSuperAdminPanel() {
               <div>
                 <h1 className="text-2xl font-bold text-slate-900">Panel de Super Administración</h1>
                 <p className="text-slate-600">Gestión de Administradores</p>
+                <p><a href="/" className="text-slate-600 font-semibold">← Volver a la página principal</a></p>
               </div>
             </div>
             
