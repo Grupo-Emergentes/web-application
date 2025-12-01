@@ -33,34 +33,6 @@ export function WalletSection({ onViewChange, fullView = false }: WalletSectionP
   const userId = 1;
 
   // Datos por defecto del DNI (simulando respuesta del backend)
-  // const dniData = {
-  //   dniNumber: '72345678',
-  //   cardNumber: '001234567',
-  //   lastName: '????',
-  //   secondLastName: 'QUISPE',
-  //   fullName: 'CARLOS ALBERTO MENDOZA QUISPE',
-  //   sex: 'M',
-  //   nationality: 'PERUANA',
-  //   birthDate: '15/03/1985',
-  //   issueDate: '20/05/2020',
-  //   expirationDate: '20/05/2030',
-  //   verificationDigit: '8',
-  //   birthUbigeo: '150101',
-  //   votingGroup: 'A',
-  //   address: 'AV. REPÚBLICA DE CHILE 456',
-  //   departament: 'LIMA',
-  //   province: 'LIMA',
-  //   district: 'JESÚS MARÍA',
-  //   photo: null,
-  //   signature: null,
-  //   verified: true,
-  //   hashBlockchain: '0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t',
-  //   verificaciones: 142,
-  //   hash: '0x1a2b3c4d5e6f7g8h9i0j...',
-  //   ultimaVerificacion: '2024-01-15 14:30',
-  //   createdAt: '2020-05-20T10:00:00Z',
-  //   updatedAt: '2024-01-15T14:30:00Z'
-  // };
 
   const documents = [
     {
