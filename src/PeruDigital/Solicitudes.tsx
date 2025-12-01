@@ -5,8 +5,7 @@ import { Badge } from './ui/badge';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { DynamicForm } from './Procedure Management/DynamicForm';
-import { ArrowLeft, Plus, Calendar, Clock, FileText, Search, Filter } from 'lucide-react';
+import { ArrowLeft, Plus, Calendar, FileText, Search } from 'lucide-react';
 
 interface SolicitudesProps {
   onViewChange: (view: any) => void;

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { CHATBOT_API_URL } from '@/config';
+import axios from 'axios';
 import { 
   MessageCircle, 
   X, 
@@ -42,45 +44,73 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
   }, [isOpen, userName, messages.length]);
 
   // Respuestas automáticas del bot
-  const getBotResponse = (userMessage: string): string => {
-    const message = userMessage.toLowerCase();
+  // const getBotResponse = (userMessage: string): string => {
+  //   const message = userMessage.toLowerCase();
     
-    if (message.includes('hola') || message.includes('buenos') || message.includes('buenas')) {
-      return `¡Hola de nuevo ${userName}! ¿Cómo puedo asistirte con los servicios de Perú Digital?`;
-    }
+  //   if (message.includes('hola') || message.includes('buenos') || message.includes('buenas')) {
+  //     return `¡Hola de nuevo ${userName}! ¿Cómo puedo asistirte con los servicios de Perú Digital?`;
+  //   }
     
-    if (message.includes('dni') || message.includes('documento')) {
-      return 'Puedes gestionar tu DNI digital desde la sección "Mi Billetera". ¡Es completamente seguro y válido oficialmente!';
-    }
+  //   if (message.includes('dni') || message.includes('documento')) {
+  //     return 'Puedes gestionar tu DNI digital desde la sección "Mi Billetera". ¡Es completamente seguro y válido oficialmente!';
+  //   }
     
-    if (message.includes('certificado') || message.includes('nacimiento')) {
-      return 'Para solicitar un certificado de nacimiento, ve a "Servicios" y selecciona "Certificado de Nacimiento Digital". Te guiaré paso a paso.';
-    }
+  //   if (message.includes('certificado') || message.includes('nacimiento')) {
+  //     return 'Para solicitar un certificado de nacimiento, ve a "Servicios" y selecciona "Certificado de Nacimiento Digital". Te guiaré paso a paso.';
+  //   }
     
-    if (message.includes('sunat') || message.includes('ruc')) {
-      return 'Los trámites de SUNAT están disponibles en nuestra sección de servicios. Puedes consultar tu RUC y realizar gestiones tributarias.';
-    }
+  //   if (message.includes('sunat') || message.includes('ruc')) {
+  //     return 'Los trámites de SUNAT están disponibles en nuestra sección de servicios. Puedes consultar tu RUC y realizar gestiones tributarias.';
+  //   }
     
-    if (message.includes('reniec')) {
-      return 'RENIEC está integrado con nuestra plataforma. Puedes realizar consultas de identidad y solicitar documentos oficiales.';
-    }
+  //   if (message.includes('reniec')) {
+  //     return 'RENIEC está integrado con nuestra plataforma. Puedes realizar consultas de identidad y solicitar documentos oficiales.';
+  //   }
     
-    if (message.includes('ayuda') || message.includes('help') || message.includes('soporte')) {
-      return 'Estoy aquí para ayudarte. Puedes preguntarme sobre:\n• Gestión de DNI digital\n• Certificados y documentos\n• Trámites SUNAT/RENIEC\n• Estado de solicitudes\n• Problemas técnicos';
-    }
+  //   if (message.includes('ayuda') || message.includes('help') || message.includes('soporte')) {
+  //     return 'Estoy aquí para ayudarte. Puedes preguntarme sobre:\n• Gestión de DNI digital\n• Certificados y documentos\n• Trámites SUNAT/RENIEC\n• Estado de solicitudes\n• Problemas técnicos';
+  //   }
     
-    if (message.includes('gracias') || message.includes('thank')) {
-      return '¡De nada! Es un placer ayudarte. Si tienes más consultas, no dudes en preguntar. 😊';
-    }
+  //   if (message.includes('gracias') || message.includes('thank')) {
+  //     return '¡De nada! Es un placer ayudarte. Si tienes más consultas, no dudes en preguntar. 😊';
+  //   }
     
-    // Respuesta por defecto
-    return 'Entiendo tu consulta. Para obtener ayuda más específica, puedes contactar a nuestro equipo de soporte o explorar las diferentes secciones de Perú Digital. ¿Hay algo específico en lo que pueda ayudarte?';
-  };
+  //   // Respuesta por defecto
+  //   return 'Entiendo tu consulta. Para obtener ayuda más específica, puedes contactar a nuestro equipo de soporte o explorar las diferentes secciones de Perú Digital. ¿Hay algo específico en lo que pueda ayudarte?';
+  // };
+
+  // const sendMessage = async () => {
+  //   if (!inputMessage.trim()) return;
+
+  //   // Agregar mensaje del usuario
+  //   const userMessage: Message = {
+  //     id: Date.now().toString(),
+  //     text: inputMessage,
+  //     sender: 'user',
+  //     timestamp: new Date()
+  //   };
+
+  //   setMessages(prev => [...prev, userMessage]);
+  //   setInputMessage('');
+  //   setIsTyping(true);
+
+  //   // Simular delay de respuesta del bot
+  //   setTimeout(() => {
+  //     const botResponse: Message = {
+  //       id: (Date.now() + 1).toString(),
+  //       text: getBotResponse(inputMessage),
+  //       sender: 'bot',
+  //       timestamp: new Date()
+  //     };
+      
+  //     setMessages(prev => [...prev, botResponse]);
+  //     setIsTyping(false);
+  //   }, 1000 + Math.random() * 1000); // 1-2 segundos de delay
+  // };
 
   const sendMessage = async () => {
     if (!inputMessage.trim()) return;
 
-    // Agregar mensaje del usuario
     const userMessage: Message = {
       id: Date.now().toString(),
       text: inputMessage,
@@ -92,19 +122,38 @@ export function Chatbot({ userName = "Carlos Mendoza" }: ChatbotProps) {
     setInputMessage('');
     setIsTyping(true);
 
-    // Simular delay de respuesta del bot
-    setTimeout(() => {
-      const botResponse: Message = {
+    try {
+      const response = await axios.post(`${CHATBOT_API_URL}/chatbot/ask`, {
+        question: userMessage.text,
+      });
+
+      const botText = response.data?.answer || "Lo siento, no pude obtener una respuesta 😕";
+
+      const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: getBotResponse(inputMessage),
+        text: botText,
         sender: 'bot',
         timestamp: new Date()
       };
-      
-      setMessages(prev => [...prev, botResponse]);
+
+      setMessages(prev => [...prev, botMessage]);
+
+    } catch (error) {
+      console.error("Error al conectar con la API:", error);
+
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "⚠️ Error de conexión con el servidor.",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsTyping(false);
-    }, 1000 + Math.random() * 1000); // 1-2 segundos de delay
+    }
   };
+
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {

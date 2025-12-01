@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { ArrowLeft, Download, Share2, QrCode, Shield, Eye, EyeOff, Copy, Check } from 'lucide-react';
 
 interface DigitalDNIProps {

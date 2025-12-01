@@ -1,6 +1,5 @@
 import { WelcomeSection } from './WelcomeSection';
 import { QuickActions } from './QuickActions';
-import { WalletSection } from './Wallet/WalletSection';
 import { ServicesGrid } from './Procedure Management/ServicesGrid';
 import { SecuritySection } from './SecuritySection';
 import { Footer } from './Footer';

@@ -1,23 +1,16 @@
-import React from 'react'
+import React from "react";
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 import './styles/globals.css'
-import {AuthProvider} from "react-oidc-context";
-
-const cognitoAuthConfig = {
-    authority: "https://cognito-idp.us-east-2.amazonaws.com/us-east-2_U2UOXVhrX",
-    client_id: "4ih0t549ecd43jp2nmnhakoems",
-    redirect_uri: "https://d84l1y8p4kdic.cloudfront.net",
-    response_type: "code",
-    scope: "email openid phone",
-};
-
-
+import { AuthProvider } from "@/auth/AuthProvider";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-      <AuthProvider {...cognitoAuthConfig}>
-          <App />
-      </AuthProvider>
-  </React.StrictMode>,
-)
+    <React.StrictMode>
+        <AuthProvider>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </AuthProvider>
+    </React.StrictMode>
+);

@@ -14,6 +14,9 @@ import {
   X
 } from 'lucide-react';
 import { ProcedureSchema } from './procedureSchemas';
+import { useAuth } from 'react-oidc-context';
+import { PROCEDURE_API_URL } from '@/config';
+import axios from 'axios';
 
 interface DynamicFormProps {
   schema: ProcedureSchema;
@@ -25,6 +28,19 @@ export function DynamicForm({ schema, onClose, onSubmit }: DynamicFormProps) {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [files, setFiles] = useState<Record<string, File>>({});
   const [currentStep, setCurrentStep] = useState(0);
+
+
+  const auth = useAuth();
+  const userEmail = auth.user?.profile?.email as any;
+
+  const calculateDateOfNext30Days = () => {
+    const today = new Date();
+    today.setDate(today.getDate() + 30);
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   // Definir pasos del formulario
   const steps = [
@@ -60,23 +76,57 @@ export function DynamicForm({ schema, onClose, onSubmit }: DynamicFormProps) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    
+    const citizenId = encodeURIComponent(userEmail);
+
+    const dataArray = schema.data
+      .map(field => formData[field.name])
+      .filter(value => value !== undefined && value !== null && value !== '');
+
     const submitData = {
-      procedureId: schema.id,
       procedureType: schema.type,
-      data: formData,
-      attachments: files,
-      amount: schema.requiredAmount
-    };
-    
-    console.log('📤 Enviando solicitud:', submitData);
-    
-    if (onSubmit) {
-      onSubmit(submitData);
-    } else {
-      alert(`Solicitud de ${schema.name} enviada exitosamente`);
-      onClose();
+      procedureStatus: "STARTED",
+      endDate: calculateDateOfNext30Days(),
+      paymentId: 1,
+      requiredAmount: schema.requiredAmount || 0,
+      officialId: 1,
+      data: dataArray,
     }
+
+    try{
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("data", JSON.stringify(submitData));
+
+      if (Object.keys(files).length > 0) {
+        Object.values(files).forEach(file => {
+          formDataToSend.append("attachments", file);
+        });
+      }
+
+      const response = await axios.post(
+        `${PROCEDURE_API_URL}/api/v1/procedure/procedures/${citizenId}`, 
+        formDataToSend,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        });
+      console.log("Respuesta del servidor:", response);
+
+      if (onSubmit) {
+        onSubmit(submitData);
+      } else {
+        alert(`Solicitud de ${schema.name} enviada exitosamente`);
+        onClose();
+      }
+
+    }catch(error){
+      console.error("Error al enviar el formulario:", error);
+      alert("Ocurrió un error al enviar la solicitud.");
+    }
+    
   };
 
   // Renderizar campo según tipo
