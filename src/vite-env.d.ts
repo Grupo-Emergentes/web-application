@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly VITE_LOGOUT_REDIRECT: string;
   readonly VITE_CHABOT_API_URL: string;
   readonly VITE_PROCEDURE_API_URL: string;
+  readonly VITE_USER_POOL_ID: string;
 }
 
 interface ImportMeta {
