@@ -4,6 +4,7 @@ import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
+import { signUp } from 'aws-amplify/auth';
 
 export function AdminSuperAdminPanel() {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +19,7 @@ export function AdminSuperAdminPanel() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const  handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validaciones básicas
@@ -50,6 +51,22 @@ export function AdminSuperAdminPanel() {
       password: '',
       confirmPassword: ''
     });
+
+    try {
+      const { userId } = await signUp({
+        username: formData.email,
+        password: formData.password,
+        options: {
+          userAttributes: {
+            email: formData.email,
+            "custom:role": "admin",
+          }
+        }
+      });
+      console.log("Admin registered successfully:", userId);
+    } catch (error) {
+        console.error("Error registering admin:", error);
+    }
   };
 
   return (
