@@ -28,6 +28,16 @@ type ViewType =
 export const DashboardPage = () => {
   const [currentView, setCurrentView] = useState<ViewType>("dashboard");
   const [currentTramite, setCurrentTramite] = useState<{ id: string; name: string } | null>(null);
+  const [dniData, setDniData] = useState<any>(null);
+  
+
+  const handleViewChange = (view: ViewType, data?: any) => {
+    if (data) {
+      setDniData(data);
+    }
+    setCurrentView(view);
+  };
+
 
   const handleStartTramite = (tramiteId: string, tramiteName: string) => {
     console.log('🚀 Iniciando trámite:', { tramiteId, tramiteName });
@@ -42,7 +52,7 @@ export const DashboardPage = () => {
       case "dashboard":
         return <Dashboard onViewChange={setCurrentView} onStartTramite={handleStartTramite} />;
       case "wallet":
-        return <WalletSection onViewChange={setCurrentView} fullView={true} />;
+        return <WalletSection onViewChange={handleViewChange} fullView={true} />;
       case "services":
         return <ServicesGrid onViewChange={setCurrentView} fullView={true} onStartTramite={handleStartTramite} />;
       case "solicitudes":
@@ -52,7 +62,7 @@ export const DashboardPage = () => {
       case "admin":
         return <AdminPanel onViewChange={setCurrentView} />;
       case "digital-dni":
-        return <DigitalDNI onViewChange={setCurrentView} />;
+        return <DigitalDNI onViewChange={handleViewChange} dniData={dniData} />;
       case "tramite-form":
         if (!currentTramite) {
           console.error('❌ No hay trámite seleccionado');

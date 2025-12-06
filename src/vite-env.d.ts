@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly VITE_CHABOT_API_URL: string;
   readonly VITE_PROCEDURE_API_URL: string;
   readonly VITE_USER_POOL_ID: string;
+  readonly VITE_WALLET_API_URL: string;
 }
 
 interface ImportMeta {

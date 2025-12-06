@@ -4,7 +4,7 @@
 3. Descomentas el loading
 */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -19,9 +19,13 @@ import {
   CheckCircle,
   Hash
 } from 'lucide-react';
+import { useAuth } from 'react-oidc-context';
+import axios from 'axios';
+import { WALLET_API_URL } from "@/config";
+// import { cn } from '../ui';
 
 interface WalletSectionProps {
-  onViewChange: (view: any) => void;
+  onViewChange: (view: any, data?: any) => void; // permite pasar dniData
   fullView?: boolean;
 }
 
@@ -150,7 +154,7 @@ interface WalletContentProps {
   metrics: any[];
   selectedDocument: string;
   setSelectedDocument: (value: string) => void;
-  onViewChange: (view: any) => void;
+  onViewChange: (view: any, data?: any) => void;
   preview?: boolean;
   showDNIModal: boolean;
   setShowDNIModal: (value: boolean) => void;
@@ -217,6 +221,36 @@ function WalletContent({
   }, [userId]);
   */
 
+  const auth = useAuth();  
+  const userEmail = auth.user?.profile.email || '';
+  const [DNITransactionData, setDNIRansactionData] = useState<any>(null);
+  const [hasDataDNITransationData, setHasDataDNITransationData] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchDNITransactionData = async () => {
+      const data = await responseDataDNITransationData();
+      setDNIRansactionData(data);
+
+    if (!data) {
+      setHasDataDNITransationData(false);
+    } else {
+      setHasDataDNITransationData(true);
+    }
+
+    };
+
+    fetchDNITransactionData();
+  }, [userEmail]);
+
+  const responseDataDNITransationData = async () => {
+    try{
+      const response = await axios.get(`${WALLET_API_URL}/api/v1/Wallet/DniTransactions/by-email/${userEmail}`);
+      return response.data;  
+    }catch(error){
+      console.log(error);
+      return null;
+    }
+  }
   // Crear el objeto dniDocument SIEMPRE (con datos del servicio o valores por defecto)
   const dniDocument = {
     id: 'dni',
@@ -315,93 +349,74 @@ function WalletContent({
         <TabsContent value="documents" className="space-y-6 mt-6">
           {/* Lista de documentos */}
           <div className="space-y-4">
-            {allDocuments.slice(0, preview ? 2 : allDocuments.length).map((doc: any) => (
-              <Card key={doc.id} className="p-6 hover:shadow-xl transition-all border-2 border-gray-900 bg-white">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3 mb-3">
-                      <div className={`w-12 h-12 bg-linear-to-br ${doc.gradient} rounded-lg flex items-center justify-center shadow-lg`}>
-                        <FileText className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-black font-semibold">{doc.name}</h3>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <Badge className="bg-white text-black border-2 border-black text-xs font-medium">
-                            {doc.status}
-                          </Badge>
-                          <Badge variant="outline" className="border-2 border-gray-900 text-black text-xs font-medium">
-                            Seguridad: {doc.security}
-                          </Badge>
+            {
+              hasDataDNITransationData && (
+                allDocuments.slice(0, preview ? 2 : allDocuments.length).map((doc: any) => (
+                  <Card key={doc.id} className="p-6 hover:shadow-xl transition-all border-2 border-gray-900 bg-white">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-3">
+                          <div className={`w-12 h-12 bg-linear-to-br ${doc.gradient} rounded-lg flex items-center justify-center shadow-lg`}>
+                            <FileText className="w-6 h-6 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="text-black font-semibold">{doc.name}</h3>
+                            <div className="flex items-center space-x-2 mt-1">
+                              <Badge className="bg-white text-black border-2 border-black text-xs font-medium">
+                                {doc.status}
+                              </Badge>
+                              <Badge variant="outline" className="border-2 border-gray-900 text-black text-xs font-medium">
+                                Seguridad: {doc.security}
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                          <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-900">
+                            <span className="text-gray-600 font-medium">Número:</span>
+                            <span className="ml-1 text-black font-semibold">{doc.number}</span>
+                          </div>
+                          <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-900">
+                            <span className="text-gray-600 font-medium">Verificaciones:</span>
+                            <span className="ml-1 text-black font-semibold">{doc.verifications}</span>
+                          </div>
+                          <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-900">
+                            <span className="text-gray-600 font-medium">Última:</span>
+                            <span className="ml-1 text-black font-semibold">{doc.lastVerification}</span>
+                          </div>
+                        </div>
+                        <div className="mt-3 text-sm bg-gray-50 p-3 rounded-lg border-2 border-gray-900">
+                          <span className="text-gray-600 font-medium">Hash:</span>
+                          <span className="ml-1 font-mono text-xs text-black font-semibold">{doc.hash}</span>
                         </div>
                       </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                      <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-900">
-                        <span className="text-gray-600 font-medium">Número:</span>
-                        <span className="ml-1 text-black font-semibold">{doc.number}</span>
+                      <div className="flex items-center space-x-2 ml-4">
+                        <Button 
+                          size="sm" 
+                          disabled={!DNITransactionData}
+                          onClick={() => {
+                            onViewChange('digital-dni', DNITransactionData);
+                          }}
+                          className="bg-red-600 hover:bg-red-700 text-white shadow-md border-2 border-red-700"
+                        >
+                          <Eye className="w-4 h-4 mr-1" />
+                          Ver
+                        </Button>
+                        <Button size="sm" variant="outline" className="border-2 border-gray-900 text-black hover:bg-gray-50">
+                          <FileText className="w-4 h-4 mr-1" />
+                          Reporte
+                        </Button>
+                        <Button size="sm" variant="outline" className="border-2 border-gray-900 text-black hover:bg-gray-50">
+                          <Share2 className="w-4 h-4 mr-1" />
+                          Compartir
+                        </Button>
                       </div>
-                      <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-900">
-                        <span className="text-gray-600 font-medium">Verificaciones:</span>
-                        <span className="ml-1 text-black font-semibold">{doc.verifications}</span>
-                      </div>
-                      <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-900">
-                        <span className="text-gray-600 font-medium">Última:</span>
-                        <span className="ml-1 text-black font-semibold">{doc.lastVerification}</span>
-                      </div>
                     </div>
-                    <div className="mt-3 text-sm bg-gray-50 p-3 rounded-lg border-2 border-gray-900">
-                      <span className="text-gray-600 font-medium">Hash:</span>
-                      <span className="ml-1 font-mono text-xs text-black font-semibold">{doc.hash}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2 ml-4">
-                    <Button 
-                      size="sm" 
-                      onClick={() => {
-                        console.log('🔘 CLICK en botón Ver detectado!');
-                        console.log('📋 doc.id:', doc.id);
-                        console.log('📋 dniData existe?:', !!dniData);
-                        console.log('📋 dniData:', dniData);
-                        
-                        // Si es el DNI, guardamos los datos en localStorage
-                        if (doc.id === 'dni' && dniData) {
-                          console.log('💾 WalletSection: Guardando datos del DNI en localStorage...');
-                          console.log('📦 Datos a guardar:', dniData);
-                          localStorage.setItem('currentDniData', JSON.stringify(dniData));
-                          console.log('✅ Datos guardados exitosamente en localStorage');
-                          
-                          // Verificar que se guardó correctamente
-                          const verificacion = localStorage.getItem('currentDniData');
-                          console.log('🔍 Verificación - Datos en localStorage:', verificacion ? 'Encontrados' : 'No encontrados');
-                          if (verificacion) {
-                            console.log('📄 Contenido guardado (primeros 200 chars):', verificacion.substring(0, 200));
-                          }
-                        } else if (doc.id === 'dni' && !dniData) {
-                          console.warn('⚠️ WalletSection: No hay datos del DNI para guardar (dniData es null)');
-                        } else {
-                          console.log('ℹ️ Este botón no es del DNI (es:', doc.id, ')');
-                        }
-                        
-                        console.log('🚀 Navegando a digital-dni...');
-                        onViewChange('digital-dni');
-                      }}
-                      className="bg-red-600 hover:bg-red-700 text-white shadow-md border-2 border-red-700"
-                    >
-                      <Eye className="w-4 h-4 mr-1" />
-                      Ver
-                    </Button>
-                    <Button size="sm" variant="outline" className="border-2 border-gray-900 text-black hover:bg-gray-50">
-                      <FileText className="w-4 h-4 mr-1" />
-                      Reporte
-                    </Button>
-                    <Button size="sm" variant="outline" className="border-2 border-gray-900 text-black hover:bg-gray-50">
-                      <Share2 className="w-4 h-4 mr-1" />
-                      Compartir
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            ))}
+                  </Card>
+                ))
+              )
+            }
+            
           </div>
 
           {preview && (
